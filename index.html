@@ -1,1 +1,73 @@
-index.html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>なんじゃもんじゃ</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 32px;
+      text-align: center;
+      user-select: none;
+    }
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <div id="screen">なんじゃもんじゃ<br>タップしてスタート</div>
+
+  <script>
+    const images = [
+      "1.png","2.png","3.png","4.png","5.png","6.png","7.png"
+    ];
+
+    let order = [];
+    let index = 0;
+    let started = false;
+    const screen = document.getElementById("screen");
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function startGame() {
+      order = [];
+      images.forEach(img => {
+        for (let i = 0; i < 5; i++) order.push(img);
+      });
+      shuffle(order);
+      index = 0;
+      started = true;
+      showNext();
+    }
+
+    function showNext() {
+      if (index >= order.length) {
+        started = false;
+        screen.innerHTML = "なんじゃもんじゃ<br>タップしてスタート";
+        return;
+      }
+      screen.innerHTML = `<img src="${order[index]}">`;
+      index++;
+    }
+
+    document.body.addEventListener("click", () => {
+      if (!started) startGame();
+      else showNext();
+    });
+  </script>
+</body>
+</html>
